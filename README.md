@@ -18,6 +18,7 @@ Está aplicação deverá mostrar na tela a mensagem "Code.education Rocks!" qua
 
 O código-fonte da aplicação está disponível em [docker/desafio-go](docker/desafio-go).
 
+<!-- 
 ### Aplicação Node
 Está aplicação deverá listar a mensagem "Full Cycle Rocks!" juntamente com a listagem de nomes cadastrados no banco de dados. Para iniciá-la, basta rodar o comando a seguir:
 
@@ -32,3 +33,4 @@ Ou, alternativamente:
 ```
 
 O código-fonte da aplicação está disponível em [docker/desafio-node](docker/desafio-node).
+-->
