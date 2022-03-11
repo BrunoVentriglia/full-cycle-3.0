@@ -31,4 +31,4 @@ Ou, alternativamente:
     docker-compose up -d
 ```
 
-O código-fonte da aplicação está disponível em [docker/desafio-node](docker/desafio-node/src).
+O código-fonte da aplicação está disponível em [docker/desafio-node](docker/desafio-node).
