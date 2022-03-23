@@ -27,5 +27,13 @@ const Insert = () => {
     connection.end();
 };
 
+const CreateDb = () => {
+
+    const connection = mysql.createConnection(config);
+    connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`);
+    connection.end();
+};
+
 exports.ListAll = ListAll;
 exports.Insert = Insert;
+exports.CreateDb = CreateDb;
