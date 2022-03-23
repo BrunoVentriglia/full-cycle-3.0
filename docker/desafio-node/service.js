@@ -6,6 +6,7 @@ function ListAll(callback) {
     connection.query(`SELECT name, DATE_FORMAT(dateinsert,'%d/%m/%Y %h:%i:%s') AS dateinsert FROM people;`, function (err, result, fields) {
         if (err)
             throw err;
+            
 
         const listPeopleName = result.map(function (people) {
             return `<li>${people.name} - ${people.dateinsert}</li>`;

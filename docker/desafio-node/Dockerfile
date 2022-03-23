@@ -1,11 +1,14 @@
 FROM node:15
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+COPY ./desafio-node/package*.json .
 
-RUN npm install --save
+RUN npm install
+
+COPY ./desafio-node/. .
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+CMD ["node", "/app/index.js"]
+
