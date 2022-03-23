@@ -1,13 +1,11 @@
 FROM node:15
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# COPY . .
-
-COPY ./desafio-node/package.json ./desafio-node/package-lock.json .
+COPY ./desafio-node .
 
 RUN npm install
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+CMD ["node", "/app/index.js"]
