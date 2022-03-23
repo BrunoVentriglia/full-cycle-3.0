@@ -15,5 +15,13 @@ app.get('/', function (req, res) {
 
 app.listen(3000, function () {
     console.log('NGINX rodando na porta 8080');
+    sleep(2000);
     peopleService.CreateDb();
+    sleep(2000);
 });
+
+function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
