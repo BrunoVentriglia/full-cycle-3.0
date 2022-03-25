@@ -39,7 +39,7 @@ services:
     networks:
       - node-network
     ports:
-      - "42333:3306"
+      - "42333:3306/tcp"
     volumes:
       - ./mysql:/var/lib/mysql
     command: --innodb-use-native-aio=0
