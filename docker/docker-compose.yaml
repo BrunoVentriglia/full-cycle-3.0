@@ -30,7 +30,7 @@ services:
     tty: true
     ports:
       - "3000:3000"
-    command: "dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint"
+    command: "dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint"
     depends_on:
       - db
 
