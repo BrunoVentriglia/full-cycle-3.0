@@ -2,27 +2,15 @@ const express = require('express');
 const peopleService = require('./service');
 const app = express();
 
+peopleService.Insert();
+
 app.get('/', function (req, res) {
     peopleService.ListAll(function (listPeopleName) {
-
-        setTimeout(function() {
-            res.send(`<h1>Full Cycle Rocks!</h1><h3>Lista de nomes</h3><ul>${listPeopleName}</ul>`);
-        }, 1000)
-
-        //res.send(`<h1>Full Cycle Rocks!</h1><h3>Lista de nomes</h3>`);
+        res.send(`<h1>Full Cycle Rocks!</h1><h3>Lista de nomes</h3><ul>${listPeopleName}</ul>`);
+        //res.send(`<h1>Full Cycle Rocks!</h1><h3>Lista de nomes</h3><ul></ul>`);
     });
-
 });
 
 app.listen(3000, function () {
-
-    console.log('NGINX rodando na porta 8080');
-
-    //setTimeout(function() {
-        peopleService.CreateDb();
-    //}, 5000)
-
-    setTimeout(function() {
-        peopleService.Insert();
-    }, 1000)
+    console.log('NGINX rodando na porta 3000');
 });

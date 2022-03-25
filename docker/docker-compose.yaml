@@ -11,9 +11,10 @@ services:
     volumes:
       - ./desafio-node:/usr/src/app
       - /usr/src/app/node_modules
+    command: "dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint"
     tty: true
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     depends_on:
       - db
 
