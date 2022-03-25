@@ -1,6 +1,22 @@
-version: '3'
+version: '3.4'
 
 services:
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    tty: true
+    networks:
+      - node-network
+    ports:
+      - "42333-3306:42333-3306/tcp"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --innodb-use-native-aio=0
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+
   app:
     build:
       context: .
@@ -30,22 +46,6 @@ services:
       - 8080:80
     depends_on:
       - app
-
-  db:
-    image: mysql:5.7
-    container_name: db
-    restart: always
-    tty: true
-    networks:
-      - node-network
-    ports:
-      - "42333:3306/tcp"
-    volumes:
-      - ./mysql:/var/lib/mysql
-    command: --innodb-use-native-aio=0
-    environment:
-      - MYSQL_DATABASE=nodedb
-      - MYSQL_ROOT_PASSWORD=root
 
 networks:
   node-network:
