@@ -16,8 +16,7 @@ services:
     # ports:
     #   - "3000:3000"
     depends_on:
-      - db:
-          condition: service_completed_successfully
+      - db
 
   nginx:
     container_name: nginx

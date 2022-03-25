@@ -20,9 +20,7 @@ function ListAll(callback) {
 
 const Insert = () => {
 
-    const connection = mysql.createConnection(config);
-    connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`);
-    
+    const connection = mysql.createConnection(config);    
     connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`);
     connection.end();
 };
