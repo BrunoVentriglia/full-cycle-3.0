@@ -17,4 +17,4 @@ COPY ./desafio-node/. .
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "index.js"]
+CMD ["docker-entrypoint"]
