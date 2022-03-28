@@ -1,22 +1,6 @@
 version: '3.4'
 
 services:
-  db:
-    image: mysql:5.7
-    container_name: db
-    restart: always
-    tty: true
-    networks:
-      - node-network
-    ports:
-      - "42333-3306:42333-3306/tcp"
-    volumes:
-      - ./mysql:/var/lib/mysql
-    command: --innodb-use-native-aio=0
-    environment:
-      - MYSQL_DATABASE=nodedb
-      - MYSQL_ROOT_PASSWORD=root
-
   app:
     build:
       context: .
@@ -30,9 +14,25 @@ services:
     tty: true
     ports:
       - "3000:3000"
-    command: "dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint"
+    #command: "dockerize -wait tcp://db:3306 -timeout 30s"
     depends_on:
       - db
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    tty: true
+    networks:
+      - node-network
+    ports:
+      - "42333:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --innodb-use-native-aio=0
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
 
   nginx:
     container_name: nginx
