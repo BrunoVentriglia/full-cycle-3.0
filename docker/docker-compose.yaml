@@ -35,18 +35,18 @@ services:
     depends_on:
       - db
 
-  # nginx:
-  #   container_name: nginx
-  #   build:
-  #     context: .
-  #     dockerfile: ./nginx/Dockerfile
-  #   restart: always
-  #   networks:
-  #     - node-network
-  #   ports:
-  #     - 8080:80
-  #   depends_on:
-  #     - app
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    restart: always
+    networks:
+      - node-network
+    ports:
+      - 8080:80
+    depends_on:
+      - app
 
 networks:
   node-network:
