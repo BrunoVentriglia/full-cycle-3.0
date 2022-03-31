@@ -1,23 +1,7 @@
 version: '3.4'
 
-services:
-  app:
-    build:
-      context: .
-      dockerfile: ./desafio-node/Dockerfile
-    container_name: app
-    networks:
-      - node-network
-    volumes:
-      - ./desafio-node:/usr/src/app
-      - /usr/src/app/node_modules
-    tty: true
-    ports:
-      - "3000:3000"
-    #command: "dockerize -wait tcp://db:3306 -timeout 30s"
-    depends_on:
-      - db
 
+services:
   db:
     image: mysql:5.7
     container_name: db
@@ -34,18 +18,35 @@ services:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
 
-  nginx:
-    container_name: nginx
+  app:
     build:
       context: .
-      dockerfile: ./nginx/Dockerfile
-    restart: always
+      dockerfile: ./desafio-node/Dockerfile
+    container_name: app
     networks:
       - node-network
+    volumes:
+      - ./desafio-node:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
     ports:
-      - 8080:80
+      - "3000:3000"
+    # command: "dockerize -wait tcp://db:3306 -timeout 30s && node migrate.js"
     depends_on:
-      - app
+      - db
+
+  # nginx:
+  #   container_name: nginx
+  #   build:
+  #     context: .
+  #     dockerfile: ./nginx/Dockerfile
+  #   restart: always
+  #   networks:
+  #     - node-network
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - app
 
 networks:
   node-network:

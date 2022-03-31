@@ -2,13 +2,15 @@ const express = require('express');
 const peopleService = require('./service');
 const app = express();
 
+peopleService.CreateDb();
+
 peopleService.Insert();
 
-app.get('/', function (req, res) {
-    peopleService.ListAll(function (listPeopleName) {
-        res.send(`<h1>Full Cycle Rocks!</h1><h3>Lista de nomes</h3><ul>${listPeopleName}</ul>`);
-    });
-});
+app.get('/', (req, res) => {
+    peopleService.ListAll((listOfNames) => {
+        res.send(listOfNames)
+    })
+})
 
 app.listen(3000, function () {
     console.log('NGINX rodando na porta 3000');
