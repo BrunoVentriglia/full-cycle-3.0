@@ -91,24 +91,51 @@ function CreateTablePeople() {
     return new Promise((resolve, reject) => {
         operation.attempt(async currentAttempt => {
             const connection = mysql.createConnection(config)
-            connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`);
-            connection.end();
-            await delay(2000)
+            connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`, async function (err) {
+                if (err) {
+                    const errAttenpt = !isItGood[numAttemptCreate] ? true : null
+                    if (operation.retry(errAttenpt)) {
+                        connection.end();
+                        numAttemptCreate++
+                        await delay(2000);
+                        return
+                    }
 
-            const err = !isItGood[numAttemptCreate] ? true : null
-            if (operation.retry(err)) {
-                numAttemptCreate++
-                return
-            }
+                    reject(operation.mainError())
+                }
 
-            if (isItGood[numAttemptCreate]) {
+                connection.end();
                 resolve('All good!')
-            } else {
-                reject(operation.mainError())
-            }
+            });
         })
     })
 };
+
+
+// function CreateTablePeople() {
+//     let operation = retry.operation()
+
+//     return new Promise((resolve, reject) => {
+//         operation.attempt(async currentAttempt => {
+//             const connection = mysql.createConnection(config)
+//             connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`);
+//             connection.end();
+//             await delay(2000)
+
+//             const err = !isItGood[numAttemptCreate] ? true : null
+//             if (operation.retry(err)) {
+//                 numAttemptCreate++
+//                 return
+//             }
+
+//             if (isItGood[numAttemptCreate]) {
+//                 resolve('All good!')
+//             } else {
+//                 reject(operation.mainError())
+//             }
+//         })
+//     })
+// };
 
 exports.ListAll = ListAll;
 exports.Insert = Insert;
