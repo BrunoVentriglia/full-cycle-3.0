@@ -2,7 +2,6 @@ const config = { host: 'db', user: 'root', password: 'root', database: 'nodedb' 
 const mysql = require('mysql');
 const retry = require('retry')
 const delay = require('delay')
-const isItGood = [false, false, true]
 let numAttempt = 10
 
 async function Insert() {
@@ -13,10 +12,9 @@ async function Insert() {
             const connection = mysql.createConnection(config)
             connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`, function (err, result, fields) {
                 if (err) {
-                    const errAttenpt = currentAttempt < numAttempt; //!isItGood[numAttemptCreate] ? true : null
+                    const errAttenpt = currentAttempt < numAttempt;
                     if (operation.retry(errAttenpt)) {
                         connection.end();
-                        //numAttemptCreate++
                         delay(3000);
                         return
                     }
@@ -40,10 +38,9 @@ async function ListAll(callback) {
             const connection = mysql.createConnection(config)
             connection.query(`SELECT name, DATE_FORMAT(dateinsert,'%d/%m/%Y %h:%i:%s') AS dateinsert FROM people;`, function (err, result, fields) {
                 if (err) {
-                    const errAttenpt = currentAttempt < numAttempt; //!isItGood[numAttemptCreate] ? true : null
+                    const errAttenpt = currentAttempt < numAttempt;
                     if (operation.retry(errAttenpt)) {
                         connection.end();
-                        //numAttemptCreate++
                         delay(3000);
                         return
                     }
@@ -64,26 +61,6 @@ async function ListAll(callback) {
     })
 };
 
-// const ListAll = (callback) => {
-//     const connection = mysql.createConnection(config)
-
-//     connection.query(`SELECT name, DATE_FORMAT(dateinsert,'%d/%m/%Y %h:%i:%s') AS dateinsert FROM people;`, function (err, result, fields) {
-//         if (err) throw err
-
-//         const listOfNames = result.map((entry) => `<li>${entry.name} - ${entry.dateinsert}</li>`).join('\n')
-
-//         return callback(`
-//             <h1>Full Cycle Rocks!</h1>
-//             <h3>List of people</h3>
-//             <ul>
-//                 ${listOfNames}
-//             </ul>
-//         `)
-//     });
-
-//     connection.end();
-// }
-
 async function CreateTablePeople() {
     let operation = retry.operation()
 
@@ -92,10 +69,9 @@ async function CreateTablePeople() {
             const connection = mysql.createConnection(config)
             connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`, function (err, result, fields) {
                 if (err) {
-                    const errAttenpt = currentAttempt < numAttempt; //!isItGood[numAttemptCreate] ? true : null
+                    const errAttenpt = currentAttempt < numAttempt;
                     if (operation.retry(errAttenpt)) {
                         connection.end();
-                        //numAttemptCreate++
                         delay(3000);
                         return
                     }
