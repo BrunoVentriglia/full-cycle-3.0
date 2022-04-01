@@ -23,11 +23,13 @@ O código-fonte da aplicação está disponível em [docker/desafio-go](docker/d
 ### Desafio 2 - Aplicação Node
 Está aplicação deverá listar a mensagem "Full Cycle Rocks!" juntamente com a listagem de nomes cadastrados no banco de dados. Para iniciá-la, basta rodar o comando a seguir:
 
+<!--
 ```bash
     npm run serve
 ```
 
 Ou, alternativamente:
+-->
 
 ```bash
     docker-compose up -d
