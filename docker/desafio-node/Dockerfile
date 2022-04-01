@@ -15,6 +15,8 @@ RUN npm install
 
 RUN npm i promise-mysql
 
+RUN npm i mysql
+
 COPY ./desafio-node/. .
 
 EXPOSE 3000

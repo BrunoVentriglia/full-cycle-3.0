@@ -4,7 +4,9 @@ const app = express();
 
 peopleService.CreateDb();
 
-peopleService.Insert();
+setTimeout(() => {
+    peopleService.Insert();
+}, 2000);
 
 app.get('/', (req, res) => {
     peopleService.ListAll((listOfNames) => {
