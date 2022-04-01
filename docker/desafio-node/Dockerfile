@@ -17,6 +17,12 @@ RUN npm i promise-mysql
 
 RUN npm i mysql
 
+RUN npm i retry
+
+RUN npm i delay
+
+RUN npm i bluebird
+
 COPY ./desafio-node/. .
 
 EXPOSE 3000
