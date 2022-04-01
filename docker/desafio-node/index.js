@@ -8,9 +8,9 @@ app.get('/', (req, res) => {
     })
 })
 
-app.listen(3000, async function () {
+app.listen(3000, async () => {
 
-    await peopleService.CreateDb();
+    await peopleService.CreateTablePeople();
     await peopleService.Insert();
 
     console.log('NGINX rodando na porta 3000');

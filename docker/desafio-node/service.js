@@ -37,19 +37,19 @@ let numAttemptCreate = 0
 // };
 
 
-function Insert() {
+async function Insert() {
     let operation = retry.operation()
 
     return new Promise((resolve, reject) => {
         operation.attempt(async currentAttempt => {
             const connection = mysql.createConnection(config)
-            connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`, async function (err) {
+            connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`, function (err, result, fields) {
                 if (err) {
                     const errAttenpt = !isItGood[numAttemptInsert] ? true : null
                     if (operation.retry(errAttenpt)) {
                         connection.end();
                         numAttemptInsert++
-                        await delay(2000);
+                        delay(2000);
                         return
                     }
 
@@ -85,19 +85,19 @@ const ListAll = (callback) => {
     connection.end();
 }
 
-function CreateTablePeople() {
+async function CreateTablePeople() {
     let operation = retry.operation()
 
     return new Promise((resolve, reject) => {
         operation.attempt(async currentAttempt => {
             const connection = mysql.createConnection(config)
-            connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`, async function (err) {
+            connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`, function (err, result, fields) {
                 if (err) {
                     const errAttenpt = !isItGood[numAttemptCreate] ? true : null
                     if (operation.retry(errAttenpt)) {
                         connection.end();
                         numAttemptCreate++
-                        await delay(2000);
+                        delay(2000);
                         return
                     }
 
@@ -139,4 +139,4 @@ function CreateTablePeople() {
 
 exports.ListAll = ListAll;
 exports.Insert = Insert;
-exports.CreateDb = CreateTablePeople;
+exports.CreateTablePeople = CreateTablePeople;
