@@ -4,8 +4,7 @@ const mysql = require('mysql');
 const retry = require('retry')
 const delay = require('delay')
 const isItGood = [false, false, true]
-let numAttemptInsert = 0
-let numAttemptCreate = 0
+let numAttempt = 10
 
 // const CreateTablePeopleOld = async () => {
 
@@ -45,23 +44,53 @@ async function Insert() {
             const connection = mysql.createConnection(config)
             connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`, function (err, result, fields) {
                 if (err) {
-                    const errAttenpt = !isItGood[numAttemptInsert] ? true : null
+                    const errAttenpt = currentAttempt < numAttempt; //!isItGood[numAttemptCreate] ? true : null
                     if (operation.retry(errAttenpt)) {
                         connection.end();
-                        numAttemptInsert++
-                        delay(2000);
+                        //numAttemptCreate++
+                        delay(3000);
                         return
                     }
 
                     reject(operation.mainError())
                 }
-
-                connection.end();
-                resolve('All good!')
+                else {
+                    connection.end();
+                    resolve('All good!')
+                }
             });
         })
     })
 };
+
+
+
+
+// async function Insert() {
+//     let operation = retry.operation()
+
+//     return new Promise((resolve, reject) => {
+//         operation.attempt(async currentAttempt => {
+//             const connection = mysql.createConnection(config)
+//             connection.query(`INSERT INTO people(name, dateinsert) values('Bruno', now());`, function (err, result, fields) {
+//                 if (err) {
+//                     const errAttenpt = !isItGood[numAttemptInsert] ? true : null
+//                     if (operation.retry(errAttenpt)) {
+//                         connection.end();
+//                         numAttemptInsert++
+//                         delay(2000);
+//                         return
+//                     }
+
+//                     reject(operation.mainError())
+//                 }
+
+//                 connection.end();
+//                 resolve('All good!')
+//             });
+//         })
+//     })
+// };
 
 
 
@@ -93,19 +122,20 @@ async function CreateTablePeople() {
             const connection = mysql.createConnection(config)
             connection.query(`CREATE TABLE IF NOT EXISTS people(id int not null auto_increment, dateinsert datetime, name varchar(255), primary key(id));`, function (err, result, fields) {
                 if (err) {
-                    const errAttenpt = !isItGood[numAttemptCreate] ? true : null
+                    const errAttenpt = currentAttempt < numAttempt; //!isItGood[numAttemptCreate] ? true : null
                     if (operation.retry(errAttenpt)) {
                         connection.end();
-                        numAttemptCreate++
-                        delay(2000);
+                        //numAttemptCreate++
+                        delay(3000);
                         return
                     }
 
                     reject(operation.mainError())
                 }
-
-                connection.end();
-                resolve('All good!')
+                else {
+                    connection.end();
+                    resolve('All good!')
+                }
             });
         })
     })
