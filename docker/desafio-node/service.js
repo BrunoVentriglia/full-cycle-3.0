@@ -4,6 +4,10 @@ const promiseMysql = require('promise-mysql')
 
 const CreateTablePeople = async () => {
 
+    setTimeout(() => {
+        
+    }, 5000);
+
     promiseMysql.createConnection(config
     ).then(function (conn) {
         connection = conn;
